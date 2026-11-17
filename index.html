@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact · Meridian Studio — Independent design &amp; direction</title>
+<meta name="description" content="Tell Meridian Studio about the thing you're making. Project inquiries, support, and feedback — answered within one business day." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231d4a3a'/><circle cx='50' cy='50' r='16' fill='%23e4572e'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,SOFT,WONK@9..144,0..100,0..1;9..144,0..100,0..1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:        #f5f0e6;
+    --paper-raised: #fdfbf6;
+    --ink:          #1c1a15;
+    --muted:        #6d6759;
+    --line:         #ddd6c7;
+    --green:        #1d4a3a;
+    --green-deep:   #143325;
+    --green-soft:   #2a5c48;
+    --vermilion:    #e4572e;
+    --vermilion-deep:#c7431f;
+    --ok:           #1d6f4a;
+    --err:          #b3261e;
+    --ring:         #1d4a3a;
+    --radius:       14px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-9: 36px;
+    --space-14: 56px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+
+  .skip-link {
+    position: absolute; inset-inline-start: -999px; top: 0;
+    background: var(--ink); color: var(--paper);
+    padding: 12px 20px; border-radius: 0 0 var(--radius) 0;
+    z-index: 100; text-decoration: none; font-weight: 600;
+  }
+  .skip-link:focus { inset-inline-start: 0; }
+
+  :focus-visible {
+    outline: 2.5px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .panel--brand :focus-visible { outline-color: #f2b705; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(6px);
+  }
+  .wordmark {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--ink);
+    font-weight: 700; letter-spacing: 0.02em; font-size: 1.05rem;
+  }
+  .wordmark svg { display: block; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.85rem; color: var(--green); font-weight: 600;
+    border: 1px solid #cfe0d2; background: #eef6ef;
+    padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+  }
+  .status-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--ok); flex: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .status-dot { animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(29,111,74,.45); } 50% { box-shadow: 0 0 0 5px rgba(29,111,74,0); } }
+  }
+
+  /* ---------- layout shell ---------- */
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-6) var(--space-14);
+  }
+
+  /* ---------- hero / split ---------- */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+    align-items: stretch;
+  }
+
+  /* brand panel */
+  .panel--brand {
+    position: relative;
+    background:
+      radial-gradient(1100px 500px at -20% -10%, rgba(255,255,255,.10), transparent 60%),
+      linear-gradient(160deg, var(--green) 0%, var(--green-deep) 100%);
+    color: #f3efe2;
+    border-radius: calc(var(--radius) + 4px);
+    padding: var(--space-9) var(--space-9) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #f2b705;
+    font-weight: 600;
+    margin-bottom: var(--space-6);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ""; display: inline-block; width: 28px; height: 2px; background: #f2b705;
+  }
+  h1 {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "SOFT" 40, "WONK" 1;
+    font-weight: 560;
+    font-size: clamp(2.5rem, 5.2vw, 3.9rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  h1 .accent {
+    font-style: italic;
+    color: #f2b705;
+  }
+  .lede {
+    margin-top: var(--space-6);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #d9e4d4;
+    max-width: 46ch;
+  }
+
+  .channels {
+    margin-top: var(--space-9);
+    border-top: 1px solid rgba(255,255,255,.18);
+  }
+  .channel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: 14px 6px;
+    border-bottom: 1px solid rgba(255,255,255,.18);
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    transition: background .22s ease-out, transform .22s ease-out;
+  }
+  .channel small {
+    display: block; font-size: .72rem; letter-spacing: .14em;
+    text-transform: uppercase; color: #9db8a4; margin-bottom: 2px; font-weight: 500;
+  }
+  .channel span.value { font-size: 1rem; font-weight: 500; color: #f7f4e8; }
+  .channel .arrow { color: #f2b705; flex: none; transition: transform .22s ease-out; }
+  @media (hover: hover) {
+    .channel:hover { background: rgba(255,255,255,.07); transform: translateX(6px); }
+    .channel:hover .arrow { transform: translateX(4px); }
+  }
+
+  .studio-meta {
+    margin-top: auto;
+    padding-top: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-6);
+    font-size: .82rem;
+    color: #a8bfae;
+  }
+  .studio-meta strong { color: #f3efe2; font-weight: 600; }
+  .clock { font-variant-numeric: tabular-nums; }
+
+  /* ---------- form panel ---------- */
+  .panel--form {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) + 4px);
+    padding: var(--space-9);
+    box-shadow: 0 1px 2px rgba(28,26,21,.06), 0 16px 40px -24px rgba(28,26,21,.35);
+    display: flex;
+    flex-direction: column;
+  }
+  .panel--form h2 {
+    font-family: "Fraunces", serif;
+    font-weight: 560;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .form-sub { color: var(--muted); font-size: .92rem; margin-top: 4px; margin-bottom: var(--space-6); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field--full { grid-column: 1 / -1; }
+
+  label {
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+  }
+  label .opt { color: var(--muted); font-weight: 400; }
+
+  input, select, textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: border-color .18s ease-out, box-shadow .18s ease-out;
+    min-height: 48px;
+  }
+  textarea { min-height: 132px; resize: vertical; line-height: 1.5; }
+  @media (max-width: 640px) { input, select, textarea { font-size: 1rem; } }
+
+  input:hover, select:hover, textarea:hover { border-color: #c8c1b1; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(29,74,58,.22);
+  }
+  [aria-invalid="true"] {
+    border-color: var(--err);
+    background: #fdf3f2;
+  }
+  [aria-invalid="true"]:focus-visible {
+    border-color: var(--err);
+    box-shadow: 0 0 0 3px rgba(179,38,30,.2);
+  }
+
+  .hint { font-size: .8rem; color: var(--muted); }
+  .error {
+    display: none;
+    font-size: .82rem;
+    color: var(--err);
+    font-weight: 600;
+    align-items: center;
+    gap: 6px;
+  }
+  .error.is-visible { display: flex; }
+  .send-error {
+    display: none;
+    margin-top: var(--space-4);
+    padding: 10px 14px;
+    background: #fdf3f2;
+    border: 1px solid var(--err);
+    color: var(--err);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .send-error.is-visible { display: block; }
+
+  /* live counter row */
+  .counter-row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4);
+  }
+  .counter { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .counter.is-near { color: var(--vermilion-deep); font-weight: 600; }
+
+  /* dynamic extra field */
+  .extra {
+    display: none;
+    grid-column: 1 / -1;
+    background: #f3efe3;
+    border: 1px dashed #cfc7b4;
+    border-radius: 10px;
+    padding: var(--space-4);
+  }
+  .extra.is-visible { display: block; }
+  .extra-inner { display: flex; flex-direction: column; gap: 6px; }
+
+  /* honeypot */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* submit */
+  .submit-row { margin-top: var(--space-6); display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+  .btn-send {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--vermilion);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 15px 32px;
+    min-height: 52px;
+    font: inherit; font-weight: 700; font-size: 1.02rem; letter-spacing: .01em;
+    cursor: pointer;
+    transition: background .2s ease-out, transform .2s ease-out;
+    touch-action: manipulation;
+  }
+  @media (hover: hover) {
+    .btn-send:hover { background: var(--vermilion-deep); transform: translateY(-2px); }
+  }
+  .btn-send:active { transform: translateY(0) scale(.98); }
+  .btn-send[disabled] { cursor: wait; opacity: .92; }
+  .btn-note { font-size: .8rem; color: var(--muted); }
+
+  .spinner {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2.5px solid rgba(255,255,255,.4);
+    border-top-color: #fff;
+    animation: spin .7s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .btn-send.is-loading .spinner { display: inline-block; }
+  .btn-send.is-loading .send-icon { display: none; }
+
+  .form-foot { margin-top: var(--space-4); font-size: .78rem; color: var(--muted); }
+
+  /* success state */
+  .success-panel {
+    display: none;
+    text-align: center;
+    padding: var(--space-9) var(--space-4);
+  }
+  .success-panel.is-visible { display: block; }
+  .success-mark {
+    width: 84px; height: 84px; border-radius: 50%;
+    background: #e7f4ec; border: 2px solid var(--ok);
+    display: grid; place-items: center; margin: 0 auto var(--space-6);
+  }
+  .success-panel h2 { margin-bottom: 8px; }
+  .success-panel p { color: var(--muted); max-width: 44ch; margin: 0 auto; }
+  .summary {
+    margin: var(--space-6) auto 0;
+    text-align: left;
+    max-width: 420px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    overflow: hidden;
+  }
+  .summary div { display: flex; gap: var(--space-4); padding: 10px 16px; font-size: .9rem; }
+  .summary div + div { border-top: 1px solid var(--line); }
+  .summary dt { color: var(--muted); width: 76px; flex: none; font-weight: 500; }
+  .summary dd { font-weight: 600; word-break: break-word; }
+  .btn-again {
+    margin-top: var(--space-6);
+    background: none; border: 1.5px solid var(--green); color: var(--green);
+    border-radius: 999px; padding: 12px 28px; min-height: 48px;
+    font: inherit; font-weight: 600; cursor: pointer;
+    transition: background .2s ease-out, color .2s ease-out;
+  }
+  @media (hover: hover) { .btn-again:hover { background: var(--green); color: #fff; } }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 980px) {
+    .split { grid-template-columns: 1fr; }
+    .panel--brand { padding: var(--space-6); }
+    h1 { font-size: clamp(2.3rem, 8.5vw, 3rem); }
+    .lede { max-width: none; }
+  }
+  @media (max-width: 560px) {
+    .page { padding: var(--space-4) var(--space-4) var(--space-9); }
+    .topbar { padding: var(--space-4); }
+    .status { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .panel--form { padding: var(--space-6); }
+    .btn-send { width: 100%; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .rise { opacity: 0; transform: translateY(26px); animation: rise .7s cubic-bezier(.22,1,.36,1) forwards; }
+    .rise-1 { animation-delay: .05s; } .rise-2 { animation-delay: .16s; } .rise-3 { animation-delay: .27s; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .spinner { animation-duration: 1.4s; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contact-form">Skip to the form</a>
+
+<header class="topbar">
+  <a class="wordmark" href="#" aria-label="Meridian Studio, home">
+    <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <circle cx="50" cy="50" r="46" fill="#1d4a3a"/>
+      <circle cx="50" cy="50" r="15" fill="#e4572e"/>
+    </svg>
+    Meridian&nbsp;Studio
+  </a>
+  <span class="status"><span class="status-dot" aria-hidden="true"></span>Open for new projects</span>
+</header>
+
+<main class="page">
+  <div class="split">
+
+    <!-- Brand column -->
+    <section class="panel--brand rise rise-1" aria-labelledby="page-title">
+      <p class="eyebrow">Contact the studio</p>
+      <h1 id="page-title">Tell us about<br />the thing<br />you&rsquo;re <span class="accent">making.</span></h1>
+      <p class="lede">A new brand, a stubborn redesign, a launch that needs nerve. Write it down in plain language and we will reply with a real answer, not an autoresponder.</p>
+
+      <div class="channels" aria-label="Other ways to reach us">
+        <a class="channel" href="mailto:hello@meridian.studio">
+          <span><small>Email</small><span class="value">hello@meridian.studio</span></span>
+          <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="channel" href="tel:+13105550148">
+          <span><small>Phone, weekdays</small><span class="value">+1 (310) 555-0148</span></span>
+          <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="channel" href="https://www.openstreetmap.org/search?query=Main+Street+Los+Angeles" target="_blank" rel="noopener noreferrer">
+          <span><small>Studio</small><span class="value">409 Main Street, Floor 3, Los Angeles</span></span>
+          <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="studio-meta">
+        <span><strong>Reply time</strong><br />Within one business day</span>
+        <span><strong>Studio time</strong><br /><span class="clock" id="studio-clock">--:--:--</span> PT</span>
+        <span><strong>Currently booking</strong><br />January 2027 onward</span>
+      </div>
+    </section>
+
+    <!-- Form column -->
+    <section class="panel--form rise rise-2" aria-labelledby="form-title">
+      <div id="form-wrap">
+        <h2 id="form-title">Send a message</h2>
+        <p class="form-sub">Fields marked optional can be skipped. Everything else we genuinely read.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-grid">
+
+            <div class="field">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Alex Rivera" required />
+              <p class="error" id="name-error" role="alert">Give us at least two characters to work with.</p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" inputmode="email" spellcheck="false" placeholder="alex@company.com" required />
+              <p class="error" id="email-error" role="alert">That address doesn&rsquo;t look right. Check for typos.</p>
+            </div>
+
+            <div class="field field--full">
+              <label for="subject">What&rsquo;s this about?</label>
+              <select id="subject" name="subject" required>
+                <option value="" selected disabled>Choose one…</option>
+                <option value="project">A new project</option>
+                <option value="support">Support for existing work</option>
+                <option value="feedback">Feedback or a kind word</option>
+                <option value="other">Something else</option>
+              </select>
+              <p class="error" id="subject-error" role="alert">Pick the closest match so it reaches the right person.</p>
+            </div>
+
+            <!-- Dynamic field: new project -->
+            <div class="extra" id="extra-project" aria-hidden="true">
+              <div class="extra-inner">
+                <label for="budget">Rough budget</label>
+                <select id="budget" name="budget">
+                  <option value="" selected disabled>Choose a range…</option>
+                  <option value="under-10k">Under $10k</option>
+                  <option value="10k-40k">$10k – $40k</option>
+                  <option value="40k-100k">$40k – $100k</option>
+                  <option value="100k-plus">$100k +</option>
+                  <option value="not-sure">Not sure yet</option>
+                </select>
+                <p class="hint">Honest ranges help us scope a useful first reply.</p>
+              </div>
+            </div>
+
+            <!-- Dynamic field: support -->
+            <div class="extra" id="extra-support" aria-hidden="true">
+              <div class="extra-inner">
+                <label for="reference">Project or invoice reference <span class="opt">(optional)</span></label>
+                <input type="text" id="reference" name="reference" autocomplete="off" placeholder="e.g. MDS-2026-014" />
+                <p class="hint">Find it in the footer of any invoice or delivery email.</p>
+              </div>
+            </div>
+
+            <div class="field field--full">
+              <div class="counter-row">
+                <label for="message">Your message</label>
+                <span class="counter" id="counter" aria-live="polite">0 / 1000</span>
+              </div>
+              <textarea id="message" name="message" maxlength="1000" placeholder="Context, goals, deadlines, links. The more concrete, the sharper our first reply." required aria-describedby="message-counter-hint"></textarea>
+              <p class="hint" id="message-counter-hint">Plain language beats a brief. Snippets and links welcome.</p>
+              <p class="error" id="message-error" role="alert">A little more detail, please. At least 20 characters.</p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="company-site">Company website</label>
+              <input type="text" id="company-site" name="company_site" tabindex="-1" autocomplete="off" />
+            </div>
+
+          </div>
+
+          <p class="send-error" id="send-error" role="alert"></p>
+
+          <div class="submit-row">
+            <button type="submit" class="btn-send" id="send-btn">
+              <svg class="send-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 11.5 21 3l-4.5 18-4-8-9.5-1.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="btn-label">Send message</span>
+            </button>
+            <p class="btn-note">No newsletter, no list. Your details stay in this thread.</p>
+          </div>
+        </form>
+
+        <p class="form-foot">By sending, you agree we may reply using the details above. We never share them.</p>
+      </div>
+
+      <!-- Success state -->
+      <div class="success-panel" id="success-panel" role="status" aria-labelledby="success-title" tabindex="-1">
+        <div class="success-mark" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6" stroke="#1d6f4a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 id="success-title">Message received.</h2>
+        <p>Thanks, <span id="success-name">friend</span>. A human will read this and reply within one business day.</p>
+        <dl class="summary" id="summary-list"></dl>
+        <button class="btn-again" id="again-btn" type="button">Send another message</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- studio clock ---------- */
+  var clockEl = document.getElementById('studio-clock');
+  function tick() {
+    clockEl.textContent = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    }).format(new Date());
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  var form        = document.getElementById('contact-form');
+  var formWrap    = document.getElementById('form-wrap');
+  var success     = document.getElementById('success-panel');
+  var successName = document.getElementById('success-name');
+  var summaryList = document.getElementById('summary-list');
+  var againBtn    = document.getElementById('again-btn');
+  var sendBtn     = document.getElementById('send-btn');
+  var btnLabel    = sendBtn.querySelector('.btn-label');
+  var counter     = document.getElementById('counter');
+
+  var nameEl    = document.getElementById('name');
+  var emailEl   = document.getElementById('email');
+  var subjectEl = document.getElementById('subject');
+  var messageEl = document.getElementById('message');
+  var budgetEl  = document.getElementById('budget');
+  var refEl     = document.getElementById('reference');
+  var hpEl      = document.getElementById('company-site');
+  var sendError = document.getElementById('send-error');
+
+  function stopLoading() {
+    sendBtn.disabled = false;
+    sendBtn.classList.remove('is-loading');
+    sendBtn.removeAttribute('aria-busy');
+    btnLabel.textContent = 'Send message';
+  }
+
+  /* ---------- dynamic subject-driven fields ---------- */
+  var extraProject = document.getElementById('extra-project');
+  var extraSupport = document.getElementById('extra-support');
+
+  function syncExtra() {
+    var v = subjectEl.value;
+    var showProject = v === 'project';
+    var showSupport = v === 'support';
+    extraProject.classList.toggle('is-visible', showProject);
+    extraSupport.classList.toggle('is-visible', showSupport);
+    extraProject.setAttribute('aria-hidden', String(!showProject));
+    extraSupport.setAttribute('aria-hidden', String(!showSupport));
+    budgetEl.disabled = !showProject;
+    refEl.disabled    = !showSupport;
+  }
+  subjectEl.addEventListener('change', function () {
+    syncExtra();
+    validateField(subjectEl);
+  });
+  syncExtra();
+
+  /* ---------- live counter ---------- */
+  var MAX = Number(messageEl.getAttribute('maxlength')) || 1000;
+  function renderCounter() {
+    var len = messageEl.value.length;
+    counter.textContent = len + ' / ' + MAX;
+    counter.classList.toggle('is-near', len >= MAX * 0.9);
+  }
+  messageEl.addEventListener('input', function () {
+    renderCounter();
+    if (messageEl.getAttribute('aria-invalid') === 'true') validateField(messageEl);
+  });
+  renderCounter();
+
+  /* ---------- validation ---------- */
+  var rules = {
+    name:    function (v) { return v.trim().length >= 2; },
+    email:   function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
+    subject: function (v) { return v !== ''; },
+    message: function (v) { return v.trim().length >= 20; }
+  };
+
+  function errorFor(el) { return document.getElementById(el.id + '-error'); }
+
+  function validateField(el) {
+    var rule = rules[el.id];
+    if (!rule) return true;
+    var ok = rule(el.value);
+    el.setAttribute('aria-invalid', String(!ok));
+    var err = errorFor(el);
+    if (err) {
+      err.classList.toggle('is-visible', !ok);
+      el.setAttribute('aria-describedby', ok ? '' : err.id);
+      if (ok) el.removeAttribute('aria-describedby');
+    }
+    return ok;
+  }
+
+  [nameEl, emailEl, subjectEl, messageEl].forEach(function (el) {
+    var evt = el.tagName === 'SELECT' ? 'change' : 'blur';
+    el.addEventListener(evt, function () { validateField(el); });
+    el.addEventListener('input', function () {
+      if (el.getAttribute('aria-invalid') === 'true') validateField(el);
+    });
+  });
+
+  /* Apps Script Web App URL (Deploy > New deployment > Web app, Execute as: Me, Access: Anyone) */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbz3HzWSf2FfFkzJS8kPc6catpkerlcuLQO94Qnq3EaADGOaLsuCM7Gb1C0TCQ7YHxvu/exec';
+
+  /* ---------- real async submit with loading + success ---------- */
+  var SUBJECT_LABELS = { project: 'New project', support: 'Support', feedback: 'Feedback', other: 'Something else' };
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Honeypot filled: silently drop, show success to avoid tipping off bots
+    if (hpEl.value.trim() !== '') { showSuccess(); return; }
+
+    var fields = [nameEl, emailEl, subjectEl, messageEl];
+    var firstInvalid = null;
+    fields.forEach(function (el) {
+      var ok = validateField(el);
+      if (!ok && !firstInvalid) firstInvalid = el;
+    });
+    if (firstInvalid) { firstInvalid.focus(); return; }
+
+    sendBtn.disabled = true;
+    sendBtn.classList.add('is-loading');
+    sendBtn.setAttribute('aria-busy', 'true');
+    btnLabel.textContent = 'Sending…';
+    sendError.classList.remove('is-visible');
+
+    if (ENDPOINT.indexOf('PASTE_YOUR_DEPLOYMENT_ID_HERE') !== -1) {
+      sendError.textContent = 'The form is not connected yet. Set ENDPOINT at the top of the script to your Apps Script Web App URL.';
+      sendError.classList.add('is-visible');
+      stopLoading();
+      return;
+    }
+
+    var payload = {
+      name:      nameEl.value.trim(),
+      email:     emailEl.value.trim(),
+      subject:   SUBJECT_LABELS[subjectEl.value] || subjectEl.value,
+      budget:    subjectEl.value === 'project' ? (budgetEl.value ? budgetEl.options[budgetEl.selectedIndex].text : '') : '',
+      reference: subjectEl.value === 'support' ? refEl.value.trim() : '',
+      message:   messageEl.value.trim()
+    };
+
+    // text/plain avoids a CORS preflight, which Apps Script web apps do not handle
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      redirect: 'follow'
+    }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json().catch(function () { return { ok: true }; });
+    }).then(function (result) {
+      if (result && result.ok === false) throw new Error(result.error || 'Endpoint reported failure');
+      stopLoading();
+      showSuccess();
+    }).catch(function (err) {
+      console.error('Contact submit failed:', err);
+      sendError.textContent = 'Could not send. Check your connection and try again, or email hello@meridian.studio directly.';
+      sendError.classList.add('is-visible');
+      stopLoading();
+    });
+  });
+
+  function showSuccess() {
+    successName.textContent = nameEl.value.trim().split(' ')[0] || 'friend';
+    var rows = [
+      ['Name',    nameEl.value.trim()],
+      ['Email',   emailEl.value.trim()],
+      ['Topic',   SUBJECT_LABELS[subjectEl.value] || subjectEl.value]
+    ];
+    if (subjectEl.value === 'project' && budgetEl.value) {
+      rows.push(['Budget', budgetEl.options[budgetEl.selectedIndex].text]);
+    }
+    if (subjectEl.value === 'support' && refEl.value.trim()) {
+      rows.push(['Reference', refEl.value.trim()]);
+    }
+    summaryList.innerHTML = rows.map(function (r) {
+      var dt = document.createElement('dt'); dt.textContent = r[0];
+      var dd = document.createElement('dd'); dd.textContent = r[1];
+      return '<div>' + dt.outerHTML + dd.outerHTML + '</div>';
+    }).join('');
+
+    formWrap.style.display = 'none';
+    success.classList.add('is-visible');
+    success.focus();
+  }
+
+  againBtn.addEventListener('click', function () {
+    form.reset();
+    renderCounter();
+    syncExtra();
+    [nameEl, emailEl, subjectEl, messageEl].forEach(function (el) {
+      el.removeAttribute('aria-invalid');
+      var err = errorFor(el); if (err) err.classList.remove('is-visible');
+    });
+    success.classList.remove('is-visible');
+    formWrap.style.display = '';
+    nameEl.focus();
+  });
+})();
+</script>
+</body>
+</html>
